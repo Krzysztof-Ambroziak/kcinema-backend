@@ -3,6 +3,7 @@ package com.github.krzysztofambroziak.kcinema.controllers;
 import com.github.krzysztofambroziak.kcinema.dtos.MovieShowtimeDTO;
 import com.github.krzysztofambroziak.kcinema.services.MovieService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,6 +31,11 @@ public class MovieController {
                                                  .setTimeOfDay(23, 59, 59)
                                                  .build();
         return movieService.findMoviesByDate(dateFrom, dateTo);
+    }
+    
+    @GetMapping("/dates/{id:\\d+}")
+    List<Calendar> findComingShowtimesForMovieId(@PathVariable Integer id) {
+        return movieService.findComingShowtimesForMovieId(id);
     }
     
     private final MovieService movieService;

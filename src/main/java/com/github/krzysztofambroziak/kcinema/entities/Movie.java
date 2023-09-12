@@ -5,11 +5,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
 import java.util.Calendar;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -38,7 +40,7 @@ public class Movie {
         return storyline;
     }
     
-    public void setStoryLine(String storyline) {
+    public void setStoryline(String storyline) {
         this.storyline = storyline;
     }
     
@@ -72,6 +74,14 @@ public class Movie {
     
     public void setDuration(int duration) {
         this.duration = duration;
+    }
+    
+    public List<Showtime> getShowtimes() {
+        return showtimes;
+    }
+    
+    public void setShowtimes(List<Showtime> showtimes) {
+        this.showtimes = showtimes;
     }
     
     @Override
@@ -111,4 +121,7 @@ public class Movie {
     
     @Column(name = "duration", nullable = false)
     private int duration;
+    
+    @OneToMany(mappedBy = "movie")
+    List<Showtime> showtimes;
 }
