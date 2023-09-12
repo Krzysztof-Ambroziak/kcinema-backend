@@ -34,12 +34,12 @@ public class Movie {
         this.title = title;
     }
     
-    public String getDescription() {
-        return description;
+    public String getStoryline() {
+        return storyline;
     }
     
-    public void setDescription(String description) {
-        this.description = description;
+    public void setStoryLine(String storyline) {
+        this.storyline = storyline;
     }
     
     public Calendar getReleaseDate() {
@@ -58,12 +58,12 @@ public class Movie {
         this.director = director;
     }
     
-    public String getStarring() {
-        return starring;
+    public String getCast() {
+        return cast;
     }
     
-    public void setStarring(String starring) {
-        this.starring = starring;
+    public void setCast(String starring) {
+        this.cast = cast;
     }
     
     public int getDuration() {
@@ -80,7 +80,7 @@ public class Movie {
             return true;
         if(o == null || getClass() != o.getClass())
             return false;
-        Movie movie = (Movie) o;
+        Movie movie = (Movie)o;
         return Objects.equals(id, movie.id);
     }
     
@@ -96,8 +96,8 @@ public class Movie {
     @Column(name = "title", length = 255, nullable = false)
     private String title;
     
-    @Column(name = "description", length = 10000, nullable = false)
-    private String description;
+    @Column(name = "storyline", length = 10000, nullable = false)
+    private String storyline;
     
     @Column(name = "date", nullable = false)
     @Temporal(TemporalType.DATE)
@@ -106,8 +106,8 @@ public class Movie {
     @Column(name = "director", length = 255, nullable = false)
     private String director;
     
-    @Column(name = "starring", length = 255, nullable = false)
-    private String starring;
+    @Column(name = "cast", length = 255, nullable = false)
+    private String cast;
     
     @Column(name = "duration", nullable = false)
     private int duration;
