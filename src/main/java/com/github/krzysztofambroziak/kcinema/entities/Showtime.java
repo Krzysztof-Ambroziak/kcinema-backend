@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -34,6 +36,14 @@ public class Showtime {
         this.date = date;
     }
     
+    public Movie getMovie() {
+        return movie;
+    }
+    
+    public void setMovie(Movie movie) {
+        this.movie = movie;
+    }
+    
     @Override
     public boolean equals(Object o) {
         if(this == o)
@@ -56,4 +66,8 @@ public class Showtime {
     @Column(name = "date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar date;
+    
+    @ManyToOne
+    @JoinColumn(name = "movie_id")
+    private Movie movie;
 }
