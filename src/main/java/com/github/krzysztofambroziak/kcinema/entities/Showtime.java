@@ -55,6 +55,14 @@ public class Showtime {
         this.seat = seat;
     }
     
+    public CinemaHall getCinemaHall() {
+        return cinemaHall;
+    }
+    
+    public void setCinemaHall(CinemaHall cinemaHall) {
+        this.cinemaHall = cinemaHall;
+    }
+    
     @Override
     public boolean equals(Object o) {
         if(this == o)
@@ -84,4 +92,8 @@ public class Showtime {
     
     @ManyToMany(mappedBy = "showtimes")
     private List<Seat> seat;
+    
+    @ManyToOne
+    @JoinColumn(name = "room_id")
+    private CinemaHall cinemaHall;
 }
