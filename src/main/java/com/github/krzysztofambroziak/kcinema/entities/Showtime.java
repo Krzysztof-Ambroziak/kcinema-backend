@@ -6,7 +6,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -47,12 +46,12 @@ public class Showtime {
         this.movie = movie;
     }
     
-    public List<Seat> getSeat() {
-        return seat;
+    public List<Seat> getSeats() {
+        return seats;
     }
     
-    public void setSeat(List<Seat> seat) {
-        this.seat = seat;
+    public void setSeats(List<Seat> seats) {
+        this.seats = seats;
     }
     
     public CinemaHall getCinemaHall() {
@@ -91,7 +90,7 @@ public class Showtime {
     private Movie movie;
     
     @ManyToMany(mappedBy = "showtimes")
-    private List<Seat> seat;
+    private List<Seat> seats;
     
     @ManyToOne
     @JoinColumn(name = "room_id")

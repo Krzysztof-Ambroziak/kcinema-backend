@@ -2,6 +2,9 @@ package com.github.krzysztofambroziak.kcinema.services;
 
 import com.github.krzysztofambroziak.kcinema.dtos.MovieDTO;
 import com.github.krzysztofambroziak.kcinema.dtos.MovieShowtimeDTO;
+import com.github.krzysztofambroziak.kcinema.dtos.ReservationDTO;
+import com.github.krzysztofambroziak.kcinema.dtos.ReservationType;
+import com.github.krzysztofambroziak.kcinema.dtos.SeatDTO;
 import com.github.krzysztofambroziak.kcinema.entities.Showtime;
 import com.github.krzysztofambroziak.kcinema.repositories.MovieRepository;
 import com.github.krzysztofambroziak.kcinema.repositories.ShowtimeRepository;
@@ -48,6 +51,26 @@ public class MovieService {
                                .filter(calendar -> calendar.after(Calendar.getInstance()))
                                .collect(Collectors.toList()))
                     .orElseGet(ArrayList::new);
+    }
+    
+    public ReservationDTO showArmchair(Integer id) {
+        final var showtime = showtimeRepository.findById(id);
+        var reservationDTO = new ReservationDTO();
+        
+        if(showtime.isPresent()) {
+            final var st = showtime.get();
+            final var reservedSeat = st.getSeats();
+            
+            for(final var seat : st.getCinemaHall().getSeats()) {
+                var seatDTO = new SeatDTO(seat.getRow(), seat.getNumber(), ReservationType.FREE);
+                
+                if(reservedSeat.contains(seat))
+                    seatDTO.setReservationType(ReservationType.RESERVED);
+                reservationDTO.addSeat(seatDTO);
+            }
+        }
+        
+        return reservationDTO;
     }
     
     private final ShowtimeRepository showtimeRepository;

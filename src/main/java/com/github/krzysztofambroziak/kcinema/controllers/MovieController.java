@@ -1,6 +1,7 @@
 package com.github.krzysztofambroziak.kcinema.controllers;
 
 import com.github.krzysztofambroziak.kcinema.dtos.MovieShowtimeDTO;
+import com.github.krzysztofambroziak.kcinema.dtos.ReservationDTO;
 import com.github.krzysztofambroziak.kcinema.services.MovieService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,6 +37,11 @@ public class MovieController {
     @GetMapping("/dates/{id:\\d+}")
     List<Calendar> findComingShowtimesForMovieId(@PathVariable Integer id) {
         return movieService.findComingShowtimesForMovieId(id);
+    }
+    
+    @GetMapping("/showtime/{id:\\d+}")
+    ReservationDTO showArmchairForShowtime(@PathVariable Integer id) {
+        return movieService.showArmchair(id);
     }
     
     private final MovieService movieService;
