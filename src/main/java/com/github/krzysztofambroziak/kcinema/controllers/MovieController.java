@@ -3,6 +3,8 @@ package com.github.krzysztofambroziak.kcinema.controllers;
 import com.github.krzysztofambroziak.kcinema.dtos.MovieShowtimeDTO;
 import com.github.krzysztofambroziak.kcinema.dtos.ReservationDTO;
 import com.github.krzysztofambroziak.kcinema.services.MovieService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,18 +33,34 @@ public class MovieController {
                                                  .setDate(yyyy, mm, dd)
                                                  .setTimeOfDay(23, 59, 59)
                                                  .build();
-        return movieService.findMoviesByDate(dateFrom, dateTo);
+        final var movies = movieService.findMoviesByDate(dateFrom, dateTo);
+        if(movies.isEmpty())
+            LOGGER.info("No movies found for date: " + day + '-' + month + '-' + year + '.');
+        else
+            LOGGER.info("Found " + movies.size() + " movies for date: " + day + '-' + month + '-' + year + '.');
+        
+        return movies;
     }
     
     @GetMapping("/dates/{id:\\d+}")
     List<Calendar> findComingShowtimesForMovieId(@PathVariable Integer id) {
-        return movieService.findComingShowtimesForMovieId(id);
+        final var dates = movieService.findComingShowtimesForMovieId(id);
+        if(dates.isEmpty())
+            LOGGER.info("No showtime found");
+        else
+            LOGGER.info("Found " + dates.size() + " showtimes.");
+        
+        return dates;
     }
     
     @GetMapping("/showtime/{id:\\d+}")
     ReservationDTO showArmchairForShowtime(@PathVariable Integer id) {
+        LOGGER.info("Request for free armchair was send.");
+        
         return movieService.showArmchair(id);
     }
+    
+    private static final Logger LOGGER = LoggerFactory.getLogger(MovieController.class);
     
     private final MovieService movieService;
 }
