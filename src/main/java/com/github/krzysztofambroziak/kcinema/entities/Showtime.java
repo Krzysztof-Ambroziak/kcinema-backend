@@ -6,12 +6,15 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
 import java.util.Calendar;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -44,6 +47,14 @@ public class Showtime {
         this.movie = movie;
     }
     
+    public List<Seat> getSeat() {
+        return seat;
+    }
+    
+    public void setSeat(List<Seat> seat) {
+        this.seat = seat;
+    }
+    
     @Override
     public boolean equals(Object o) {
         if(this == o)
@@ -70,4 +81,7 @@ public class Showtime {
     @ManyToOne
     @JoinColumn(name = "movie_id")
     private Movie movie;
+    
+    @ManyToMany(mappedBy = "showtimes")
+    private List<Seat> seat;
 }

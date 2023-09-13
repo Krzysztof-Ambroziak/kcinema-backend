@@ -48,7 +48,6 @@ public class MovieService {
                                .filter(calendar -> calendar.after(Calendar.getInstance()))
                                .collect(Collectors.toList()))
                     .orElseGet(ArrayList::new);
-        
     }
     
     private final ShowtimeRepository showtimeRepository;

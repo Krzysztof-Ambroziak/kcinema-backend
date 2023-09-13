@@ -5,8 +5,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -39,6 +42,14 @@ public class Seat {
         this.number = number;
     }
     
+    public List<Showtime> getShowtimes() {
+        return showtimes;
+    }
+    
+    public void setShowtimes(List<Showtime> showtimes) {
+        this.showtimes = showtimes;
+    }
+    
     @Override
     public boolean equals(Object o) {
         if(this == o)
@@ -64,4 +75,8 @@ public class Seat {
     
     @Column(name = "num", nullable = false)
     private int number;
+    
+    @ManyToMany
+    @JoinTable(name = "reservations")
+    private List<Showtime> showtimes;
 }
